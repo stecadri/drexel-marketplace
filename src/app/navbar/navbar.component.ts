@@ -5,11 +5,20 @@ import {MenuItem} from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 import { StyleClassModule } from 'primeng/styleclass';
 import { InputTextModule } from 'primeng/inputtext';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
+import { Badge, BadgeModule } from 'primeng/badge';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [MenuModule, MenubarModule, InputTextModule],
+  imports: [
+    MenuModule, 
+    MenubarModule, 
+    InputTextModule, 
+    AvatarModule,
+    BadgeModule
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
@@ -24,9 +33,6 @@ export class NavbarComponent {
   ngOnInit() {
       this.items = [
         {
-          icon: 'pi pi-user'
-        },
-        {
           label: 'File',
           icon: 'pi pi-plus',
           items: [
@@ -36,14 +42,11 @@ export class NavbarComponent {
           ]
         },
         {
-          label: 'Home', routerLink: ['/home']
-        },
-        {
           label: 'About', routerLink: ['/about']
         },
         {
           label: 'Cart',
-          badge: '123'
+          badge: "2"
         }
         
     ]
