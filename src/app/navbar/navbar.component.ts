@@ -24,6 +24,9 @@ export class NavbarComponent {
   ngOnInit() {
       this.items = [
         {
+          icon: 'pi pi-user'
+        },
+        {
           label: 'File',
           icon: 'pi pi-plus',
           items: [
