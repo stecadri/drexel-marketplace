@@ -47,8 +47,13 @@ export class NavbarComponent {
         {
           label: 'Cart',
           badge: "2"
-        }
-        
+        },
+        {
+          label: 'Sign in', routerLink: ['/sign-in']
+        },
+        {
+          label: 'Register', routerLink: ['/register']
+        },
     ]
   }
 }

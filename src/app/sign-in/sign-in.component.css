@@ -1,0 +1,20 @@
+body {
+    background-image: url('https://1.bp.blogspot.com/-8ghfl1bEbM4/WMoe_LDXX7I/AAAAAAAAG4k/6otX5FnZNHUvRnqpJ10hkajxRbSHv6n0ACLcB/s1600/Dillworth_Plaza2.jpg');
+    background-size: cover;
+}
+
+.sign-in {
+    float: right;
+    width: 40%;
+    background: white;
+    padding: 10px;
+    height: 100vh;
+    overflow: auto;
+    text-align: center;
+    vertical-align:middle; 
+
+}
+
+input {
+    margin-bottom: 20px;
+}
