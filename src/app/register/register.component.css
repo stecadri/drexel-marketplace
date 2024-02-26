@@ -1,8 +1,15 @@
-body {
+.page {
     background-image: url('https://1.bp.blogspot.com/-8ghfl1bEbM4/WMoe_LDXX7I/AAAAAAAAG4k/6otX5FnZNHUvRnqpJ10hkajxRbSHv6n0ACLcB/s1600/Dillworth_Plaza2.jpg');
+    background-repeat: no-repeat;
     background-size: cover;
-}
 
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:75px;
+    left:0px;
+    z-index:1000;
+}
 .register {
     float: right;
     width: 40%;
