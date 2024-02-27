@@ -8,6 +8,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { Badge, BadgeModule } from 'primeng/badge';
+import { ButtonModule } from 'primeng/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -17,15 +19,12 @@ import { Badge, BadgeModule } from 'primeng/badge';
     MenubarModule, 
     InputTextModule, 
     AvatarModule,
-    BadgeModule
+    BadgeModule,
+    ButtonModule,
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-
-//  TODO:
-//  Figure out why menuitem elements such as icon and badge are not working as per 
-//  https://primeng.org/menus
 
 export class NavbarComponent {
   items: MenuItem[];
@@ -45,15 +44,17 @@ export class NavbarComponent {
           label: 'About', routerLink: ['/about']
         },
         {
-          label: 'Cart',
-          badge: "2"
-        },
-        {
           label: 'Sign in', routerLink: ['/sign-in']
         },
         {
           label: 'Register', routerLink: ['/register']
         },
     ]
+  };
+
+  constructor(private router: Router) {}
+  navigateToCart(event: Event): void {
+    event.stopPropagation();
+    this.router.navigate(['/cart']);
   }
 }
