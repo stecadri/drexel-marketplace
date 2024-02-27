@@ -6,7 +6,7 @@
         <input pInputText placeholder="Password" type="password" formControlName="password" /> <br>
         <input pInputText placeholder="Re-enter Password" type="password" formControlName="password" /> <br>
         <p-button label="Register" type="submit"></p-button> <br>
-        <p-button [link]="true" routerLink="/sign-in">Or sign in.</p-button>
+        <p-button label="Or sign in." (click)="navigateToSignIn($event)"></p-button>
     </div>
 
 </div>
