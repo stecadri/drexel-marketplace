@@ -5,8 +5,8 @@
     </ng-template>
     <ng-template pTemplate="end">
         <input type="text" pInputText pInputIcon="pi pi-search" placeholder="Search" class="w-full" />
-        <p-button class="cart" icon="pi pi-shopping-cart" (click)="navigateToCart($event)" [style]="{ 'background-color': '#07294D' }"></p-button>
-        <!-- <p-button class="cart" icon="pi pi-shopping-cart" (click)="navigateToCart()" [style]="{ 'background-color': '#07294D' }"></p-button> -->
-        <p-avatar icon="pi pi-user" styleClass="mr-2" [style]="{ 'width': '45px', 'height': '45px' }" (click)="navigateToAccountPage()"></p-avatar>
+        <!-- <p-button class="cart" icon="pi pi-shopping-cart" (click)="navigateToCart($event)" [style]="{ 'background-color': '#07294D' }"></p-button> -->
+        <p-button class="cart" icon="pi pi-shopping-cart" (click)="navigateToCart($event)"></p-button>
+        <p-button icon="pi pi-user" styleClass="mr-2" [style]="{ 'width': '45px', 'height': '45px' }" (click)="navigateToAccountPage()"></p-button>
     </ng-template>
 </p-menubar>
