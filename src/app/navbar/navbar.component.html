@@ -1,19 +1,3 @@
-<!--<nav class="navbar">
-    <div class="navbar-logo">
-        <img src="assets/logo.png" alt="My App Logo" />
-    </div>
-    <ul class="navbar-links">
-        <li><a routerLink="/">Home</a></li>
-        <li><a routerLink="/about">About</a></li>
-    <li><a routerLink="/about">Services</a></li>
-    <li><a routerLink="/about">About</a></li>
-        <li><a routerLink="/contact">Blog</a></li>
-    </ul>
-    <div class="navbar-actions">
-        <!-- Add login/logout buttons or user-related actions here
-    </div>
-</nav>-->
-
 <p-menubar [model]="items">
     <ng-template pTemplate="start">
         <img src="https://drexel.edu/~/media/Images/identity/pageLogos/Drexel_Horizontal_Lockup_HEX_600.ashx?la=en" height="40" class="mr-2" />
@@ -22,6 +6,7 @@
     <ng-template pTemplate="end">
         <input type="text" pInputText pInputIcon="pi pi-search" placeholder="Search" class="w-full" />
         <p-button class="cart" icon="pi pi-shopping-cart" (click)="navigateToCart($event)" [style]="{ 'background-color': '#07294D' }"></p-button>
+        <!-- <p-button class="cart" icon="pi pi-shopping-cart" (click)="navigateToCart()" [style]="{ 'background-color': '#07294D' }"></p-button> -->
         <p-avatar icon="pi pi-user" styleClass="mr-2" [style]="{ 'width': '45px', 'height': '45px' }" (click)="navigateToAccountPage()"></p-avatar>
     </ng-template>
 </p-menubar>

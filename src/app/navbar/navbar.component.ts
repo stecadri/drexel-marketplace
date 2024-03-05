@@ -57,6 +57,10 @@ export class NavbarComponent {
     event.stopPropagation();
     this.router.navigate(['/cart']);
   }
+  // navigateToCart() {
+  //   this.router.navigate(['/cart']); 
+  // }
+
   navigateToAccountPage() {
     this.router.navigate(['/account']); 
   }

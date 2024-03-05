@@ -5,7 +5,8 @@ import { AboutComponent } from './about/about.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { RegisterComponent } from './register/register.component';
 import { CartComponent } from './cart/cart.component';
-import {AccountComponent } from './account/account.component';
+import { AccountComponent } from './account/account.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 
 export const routes: Routes = [
@@ -15,11 +16,17 @@ export const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'account', component: AccountComponent },
-  { path: 'cart', component: CartComponent },
+  // { path: 'cart', component: CartComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  // imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot([
+    // { path: '', component: ProductListComponent },
+    { path: 'products/:productId', component: ProductDetailsComponent },
+    { path: 'cart', component: CartComponent },
+  ])],
+  exports: [RouterModule],
+  
 })
 export class AppRoutingModule { }
