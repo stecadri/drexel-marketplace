@@ -7,6 +7,7 @@ import { RegisterComponent } from './register/register.component';
 import { CartComponent } from './cart/cart.component';
 import { AccountComponent } from './account/account.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { UpdateProductComponent } from './update-product/update-product.component';
 
 
 export const routes: Routes = [
@@ -16,6 +17,7 @@ export const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'account', component: AccountComponent },
+  {path: 'update-product', component: UpdateProductComponent},
   // { path: 'cart', component: CartComponent },
 ];
 
