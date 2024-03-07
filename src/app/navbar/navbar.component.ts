@@ -49,6 +49,9 @@ export class NavbarComponent {
         {
           label: 'Register', routerLink: ['/register']
         },
+        {
+          label: 'Update Product', routerLink: ['/update-product']
+        },
     ]
   };
 
@@ -57,6 +60,10 @@ export class NavbarComponent {
     event.stopPropagation();
     this.router.navigate(['/cart']);
   }
+  // navigateToCart() {
+  //   this.router.navigate(['/cart']); 
+  // }
+
   navigateToAccountPage() {
     this.router.navigate(['/account']); 
   }
