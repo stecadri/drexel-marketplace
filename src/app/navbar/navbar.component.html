@@ -1,7 +1,8 @@
 <p-menubar [model]="items">
     <ng-template pTemplate="start">
-        <img src="https://drexel.edu/~/media/Images/identity/pageLogos/Drexel_Horizontal_Lockup_HEX_600.ashx?la=en" height="40" class="mr-2" />
-        
+        <a [routerLink]="['/product-details']">
+            <img src="https://drexel.edu/~/media/Images/identity/pageLogos/Drexel_Horizontal_Lockup_HEX_600.ashx?la=en" height="40" class="mr-2" />
+        </a>
     </ng-template>
     <ng-template pTemplate="end">
         <input type="text" pInputText pInputIcon="pi pi-search" placeholder="Search" class="w-full" />
