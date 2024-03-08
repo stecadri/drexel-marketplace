@@ -9,7 +9,6 @@ import { AccountComponent } from './account/account.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { UpdateProductComponent } from './update-product/update-product.component';
 
-
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -18,6 +17,8 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'account', component: AccountComponent },
   { path: 'update-product', component: UpdateProductComponent },
+  { path: 'product-details', component: ProductDetailsComponent},
+
 
   // { path: 'cart', component: CartComponent },
 ];

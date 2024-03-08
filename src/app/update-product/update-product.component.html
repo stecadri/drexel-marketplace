@@ -2,7 +2,7 @@
 <p-table #dt [value]="products" [paginator]="true" [rows]="5" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" [rowsPerPageOptions]="[5,10,15]" [globalFilterFields]="['name','price']">
     <ng-template pTemplate="caption">
         <div class="flex flex-column md:flex-row md:justify-content-between align-items-center gap-4">
-        <h3>Shopping Products</h3>
+        <h3>Add or Update Your Products</h3>
         <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
         <input pInputText type="text" (input)="filterProducts($event)" placeholder="Search by name or price" />
@@ -22,27 +22,32 @@
 
     <ng-template pTemplate="body" let-product>
         <tr>
-            <td>{{ product.name }}</td>
-            <td>{{ product.price | currency:'USD':'symbol' }}</td>
+            <!-- <td>{{ product.name }}</td> -->
+            <input type="text" pInputText [(ngModel)]="product.name" />
+            <!-- <td>{{ product.price | currency:'USD':'symbol' }}</td> -->
             <td>
-<p-inputNumber [(ngModel)]="product.quantity" [min]="1" [max]="10" (onBlur)="updateTotal(product)"></p-inputNumber>
+                <p-inputNumber [(ngModel)]="product.price" (onBlur)="updateTotal(product)" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+            </td>
+            <td>
+                <p-inputNumber [(ngModel)]="product.quantity" [min]="1" [max]="10" (onBlur)="updateTotal(product)"></p-inputNumber>
             </td>
             <td>{{ product.total | currency:'USD':'symbol' }}</td>
             <td>
-            <p-button icon="pi pi-trash" (onClick)="removeProduct(product)" class="p-button-rounded p-button-danger p-button-outlined"></p-button>
+                <p-button icon="pi pi-trash" (onClick)="removeProduct(product)" class="p-button-rounded p-button-danger p-button-outlined"></p-button>
             </td>
         </tr>
     </ng-template>
 
     <ng-template pTemplate="summary">
         <div class="flex flex-column md:flex-row md:justify-content-between align-items-center gap-4">
-            <div class="flex align-items-center gap-2">
-                <p-button icon="pi pi-plus" (onClick)="addProduct()" class="p-button-rounded p-button-success p-button-outlined"></p-button>
-                <span class="font-semibold">Add New Product</span>
+            <div class="flex align-items-center gap-2" id="add-margin-here">
+                <p-button label="Add New Product" (onClick)="addProduct()" class="p-button-rounded p-button-success p-button-outlined"></p-button>
+                <!-- <span class="font-semibold">Add New Product</span> -->
             </div>
             <div class="flex align-items-center gap-4">
                 <span class="text-2xl font-bold">Grand Total: {{ grandTotal | currency:'USD':'symbol' }}</span>
-                <p-button label="Save" (onClick)="saveProducts()" class="p-button-rounded p-button-primary"></p-button>
+                <br>
+                <p-button [style]="{'margin-top': '20px'}" label="Save" (onClick)="saveProducts()" class="p-button-rounded p-button-primary"></p-button>
             </div>
         </div>
     </ng-template>

@@ -10,11 +10,12 @@ import { ViewChild } from '@angular/core';
 import { CurrencyPipe } from '@angular/common'; 
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-update-product',
   standalone: true,
-  imports: [    CommonModule, ToastModule, TableModule, InputNumberModule, ButtonModule,CurrencyPipe,FormsModule],
+  imports: [CommonModule, ToastModule, TableModule, InputNumberModule, ButtonModule,CurrencyPipe,FormsModule, InputTextModule],
   templateUrl: './update-product.component.html',
   styleUrls: ['./update-product.component.css'],
   providers: [ProductService,MessageService]

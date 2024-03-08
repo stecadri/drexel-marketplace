@@ -50,7 +50,10 @@ export class NavbarComponent {
           label: 'Register', routerLink: ['/register']
         },
         {
-          label: 'Update Product', routerLink: ['/update-product']
+          label: 'Update Your Products', routerLink: ['/update-product']
+        },
+        {
+          label: 'View All Products', routerLink: ['/product-details']
         },
     ]
   };
