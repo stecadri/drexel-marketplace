@@ -15,12 +15,15 @@ mongoose.connect('mongodb://localhost:27017/drexel-marketplace', { useNewUrlPars
 
 // Product Schema
 const ProductSchema = new mongoose.Schema({
+  id : Number,
   name: String,
   description: String,
   photo: String,
   seller: String,
-  price: Number, // Changed from Float32Array to Number for Mongoose compatibility
-  category: [String] // Assuming category is an array of strings
+  price: Number, 
+  quantity: Number,
+  total: Number,
+  category: [String] 
 });
 
 // Product Model

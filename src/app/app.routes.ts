@@ -17,17 +17,18 @@ export const routes: Routes = [
   { path: 'sign-in', component: SignInComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'account', component: AccountComponent },
-  {path: 'update-product', component: UpdateProductComponent},
+  { path: 'update-product', component: UpdateProductComponent },
+
   // { path: 'cart', component: CartComponent },
 ];
 
 @NgModule({
-  // imports: [RouterModule.forRoot(routes)],
-  imports: [RouterModule.forRoot([
-    // { path: '', component: ProductListComponent },
-    { path: 'products/:productId', component: ProductDetailsComponent },
-    { path: 'cart', component: CartComponent },
-  ])],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true })], // only for debugging purposes
+  // imports: [RouterModule.forRoot([
+  //   // { path: '', component: ProductListComponent },
+  //   { path: 'products/:productId', component: ProductDetailsComponent },
+  //   { path: 'cart', component: CartComponent },
+  // ])],
   exports: [RouterModule],
   
 })
