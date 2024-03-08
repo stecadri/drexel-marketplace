@@ -34,13 +34,22 @@ const Product = mongoose.model('Product', ProductSchema);
 // Create a Product
 app.post('/products', async (req, res) => {
   try {
-    const product = new Product(req.body);
-    await product.save();
-    res.status(201).send(product);
+    // Check if the request body is an array
+    if (Array.isArray(req.body)) {
+      // Use MongoDB's insertMany() for bulk insertion
+      const products = await Product.insertMany(req.body);
+      res.status(201).send(products);
+    } else {
+      // Handle a single product insertion
+      const product = new Product(req.body);
+      await product.save();
+      res.status(201).send(product);
+    }
   } catch (error) {
     res.status(400).send(error);
   }
 });
+
 
 // Get all Products
 app.get('/products', async (req, res) => {

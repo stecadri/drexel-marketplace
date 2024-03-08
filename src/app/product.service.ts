@@ -39,7 +39,9 @@ export class ProductService {
     return this.http.delete<Product>(url);
   }
   saveProducts(products: Product[]): Observable<Product[]> {
+    console.log('Saving products', products);
     return this.http.post<Product[]>(this.apiUrl, products);
   }
+  
 
 }
