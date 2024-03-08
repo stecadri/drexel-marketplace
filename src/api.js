@@ -4,10 +4,12 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const port = 3000;
-
+const cors = require('cors'); 
 // Middleware
 app.use(bodyParser.json());
-
+app.use(cors({
+  origin: 'http://localhost:4200' 
+}));
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/drexel-marketplace', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB Connected'))

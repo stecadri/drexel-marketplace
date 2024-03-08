@@ -28,7 +28,7 @@ export class ProductService {
   }
 
   // Method to update an existing product on the backend
-  updateProduct(productId: string, updatedProduct: Product): Observable<Product> {
+  updateProduct(productId: string, updatedProduct: Partial<Product>): Observable<Product> {
     const url = `${this.apiUrl}/${productId}`;
     return this.http.patch<Product>(url, updatedProduct);
   }
@@ -38,4 +38,8 @@ export class ProductService {
     const url = `${this.apiUrl}/${productId}`;
     return this.http.delete<Product>(url);
   }
+  saveProducts(products: Product[]): Observable<Product[]> {
+    return this.http.post<Product[]>(this.apiUrl, products);
+  }
+
 }

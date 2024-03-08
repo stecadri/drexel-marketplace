@@ -9,20 +9,26 @@ import { MessageService } from 'primeng/api';
 import { ViewChild } from '@angular/core';
 import { CurrencyPipe } from '@angular/common'; 
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-update-product',
   standalone: true,
-  imports: [ToastModule, TableModule, InputNumberModule, ButtonModule,CurrencyPipe,FormsModule],
+  imports: [    CommonModule, ToastModule, TableModule, InputNumberModule, ButtonModule,CurrencyPipe,FormsModule],
   templateUrl: './update-product.component.html',
-  styleUrls: ['./update-product.component.css']
+  styleUrls: ['./update-product.component.css'],
+  providers: [ProductService,MessageService]
 })
 export class UpdateProductComponent{
-  products: Product[];
+  products: Product[] = []; 
   grandTotal: number;
   @ViewChild('dt') dt: any; 
 
-  constructor(private productService: ProductService, private messageService: MessageService) { }
-  
+  constructor(private productService: ProductService, private messageService: MessageService) {
+    console.log('ProductService:', productService);
+    console.log('MessageService:', messageService);
+  }
+    
   ngOnInit() {
     this.productService.getProducts().subscribe({
       next: (data) => {
@@ -75,11 +81,20 @@ export class UpdateProductComponent{
   }
   
   saveProducts() {
-    // Send the products data to the server
-    // For simplicity, we assume the server returns a success message
-    this.messageService.add({severity:'success', summary:'Success', detail:'Products saved to database'});
+    this.productService.saveProducts(this.products).subscribe({
+      next: (savedProducts) => {
+        // Handle the response, maybe update the local products array
+        // with the returned one which might contain generated IDs, etc.
+        this.products = savedProducts;
+        this.messageService.add({severity:'success', summary:'Success', detail:'Products saved to database'});
+      },
+      error: (error) => {
+        // Handle any errors here
+        console.error('Error saving products:', error);
+        this.messageService.add({severity:'error', summary:'Error', detail:'Could not save products to database'});
+      }
+    });
   }
-  
   calculateGrandTotal() {
     // Calculate the sum of the totals of the products
     let total = 0;
