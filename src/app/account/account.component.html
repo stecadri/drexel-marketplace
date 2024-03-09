@@ -1,0 +1,42 @@
+<div class="container">
+    <h1>Account</h1>
+    
+    <h2>Manage your account settings</h2>
+    
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col-12 p-md-4">
+            <p-avatar [image]="user.image" size='xlarge' shape="circle"></p-avatar>
+        </div>
+        <div class="p-field p-col-12 p-md-8">
+
+            <h3>Personal Info</h3>
+            <div class="p-field p-col-12 p-md-6">
+                <label for="name">Name</label>
+                <input pInputText id="name" [(ngModel)]="user.name" required [style]="{'margin-bottom': '20px'}" />
+            </div>
+    
+            <div class="p-field p-col-12 p-md-6">
+                <label for="email">Email</label>
+                <input pInputText id="email" [(ngModel)]="user.email" type="email" required />
+            </div>
+
+            <h3>Security</h3>
+            <div class="p-field p-col-12 p-md-6">
+                <label for="password">Password</label>
+                <p-password id="password" [(ngModel)]="user.password" [feedback]="false" required [style]="{'margin-bottom': '20px'}"></p-password>
+            </div>
+        
+            <div class="p-field p-col-12 p-md-6">
+                <label for="confirm">Confirm Password</label>
+                <p-password id="confirm" [(ngModel)]="user.confirm" [feedback]="false" required [style]="{'margin-bottom': '20px'}"></p-password>
+            </div>
+        
+            <div class="p-field p-col-12" id="buttons">
+                <p-button label="Update" (onClick)="update()" [style]="{ 'background-color': '#006699', 'margin-bottom': '20px' }"></p-button>
+                <p-button label="Delete" (onClick)="delete()" class="p-button-danger" [style]="{ 'background-color': '#006699', 'margin-bottom': '20px' }"></p-button>
+                <p-button label="Logout" (onClick)="logout()" class="p-button-secondary" [style]="{ 'background-color': '#006699', 'margin-bottom': '20px' }"></p-button>
+            </div>
+            <p-messages></p-messages>
+        </div>
+    </div>
+</div>

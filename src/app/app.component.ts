@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { DataViewModule } from 'primeng/dataview';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,8 @@ import { DataViewModule } from 'primeng/dataview';
   imports: [
     RouterOutlet, 
     NavbarComponent,
-    DataViewModule
+    DataViewModule,
+    HttpClientModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

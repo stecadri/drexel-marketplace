@@ -1,0 +1,35 @@
+p-table {
+    margin: 1rem;
+}
+    
+p-table > .p-paginator {
+    background-color: transparent;
+}
+    
+p-table > .p-datatable-tbody > tr > td {
+    vertical-align: middle;
+}
+    
+p-table > .p-datatable-summary {
+    padding: 1rem;
+}
+    
+p-inputNumber {
+    width: 6rem;
+}
+    
+p-button {
+    margin-right: 0.5rem;
+}
+
+#add-margin-here {
+    margin-bottom: 20px;
+}
+
+#add-margin-top-here {
+    margin-top: 20px;
+}
+
+br {
+    line-height:22px;
+}
