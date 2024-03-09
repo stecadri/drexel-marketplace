@@ -115,7 +115,7 @@ app.delete('/products/:id', async (req, res) => {
   }
 });
 
-api.post('/register', (req, res) => {
+app.post('/register', (req, res) => {
     const newUser = new User({
         username: req.body.username,
         email: req.body.email,
@@ -125,7 +125,7 @@ api.post('/register', (req, res) => {
         .then(() => res.json('User added!'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
-api.post('/login', (req, res) => {
+app.post('/login', (req, res) => {
     User.findOne({ email: req.body.email, password: req.body.password })
         .then(user => {
             if (user) {
@@ -136,7 +136,6 @@ api.post('/login', (req, res) => {
         })
         .catch(err => res.status(400).json('Error: ' + err));
 });
-module.exports = router;
 
 // Start the server
 app.listen(port, () => {
