@@ -28,7 +28,22 @@ const ProductSchema = new mongoose.Schema({
   category: [String] 
 });
 
-// Product Model
+const UserSchema = mongoose.Schema({
+    username: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    }
+});
+
+const User = mongoose.model('User', UserSchema);
 const Product = mongoose.model('Product', ProductSchema);
 
 // Create a Product
@@ -99,6 +114,29 @@ app.delete('/products/:id', async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+api.post('/register', (req, res) => {
+    const newUser = new User({
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password
+    });
+    newUser.save()
+        .then(() => res.json('User added!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+api.post('/login', (req, res) => {
+    User.findOne({ email: req.body.email, password: req.body.password })
+        .then(user => {
+            if (user) {
+                res.json('Login successful!');
+            } else {
+                res.status(400).json('Invalid email or password.');
+            }
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+module.exports = router;
 
 // Start the server
 app.listen(port, () => {
