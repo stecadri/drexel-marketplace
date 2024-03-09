@@ -1,0 +1,9 @@
+/* Select the p-image element inside the carousel item template */
+.p-carousel-item p-image {
+    /* Set the width to 100% of the parent element */
+    width: 50%;
+    /* Set the max height to 200px */
+    max-height: 150px;
+    /* Set the object fit to cover, which scales the image to cover the available space while preserving its aspect ratio */
+    /* object-fit: cover; */
+}

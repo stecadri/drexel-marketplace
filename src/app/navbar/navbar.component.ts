@@ -44,16 +44,16 @@ export class NavbarComponent {
           label: 'About', routerLink: ['/about']
         },
         {
-          label: 'Sign in', routerLink: ['/sign-in']
-        },
-        {
-          label: 'Register', routerLink: ['/register']
+          label: 'View All Products', routerLink: ['/product-details']
         },
         {
           label: 'Update Your Products', routerLink: ['/update-product']
         },
         {
-          label: 'View All Products', routerLink: ['/product-details']
+          label: 'Sign in', routerLink: ['/sign-in']
+        },
+        {
+          label: 'Register', routerLink: ['/register']
         },
     ]
   };
@@ -69,6 +69,10 @@ export class NavbarComponent {
 
   navigateToAccountPage() {
     this.router.navigate(['/account']); 
+  }
+
+  navigateToHomePage() {
+    this.router.navigate(['/home']); 
   }
   
 }
