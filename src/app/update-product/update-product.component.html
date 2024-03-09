@@ -12,6 +12,7 @@
 
     <ng-template pTemplate="header">
         <tr>
+            <th>Image</th>
             <th>Name</th>
             <th>Price</th>
             <th>Quantity</th>
@@ -22,8 +23,9 @@
 
     <ng-template pTemplate="body" let-product>
         <tr>
+            <td><p-fileUpload mode="basic" chooseLabel="Upload" name="uploadProduct" url="./upload.php" accept="image/*" [maxFileSize]="1000000" (onUpload)="onUpload($event)"></p-fileUpload></td>
             <!-- <td>{{ product.name }}</td> -->
-            <input type="text" pInputText [(ngModel)]="product.name" />
+            <input type="text" pInputText [(ngModel)]="product.name" [style]="{ 'margin-top':'15px' }"/>
             <!-- <td>{{ product.price | currency:'USD':'symbol' }}</td> -->
             <td>
                 <p-inputNumber [(ngModel)]="product.price" (onBlur)="updateTotal(product)" mode="currency" currency="USD" locale="en-US"></p-inputNumber>

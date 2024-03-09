@@ -11,11 +11,12 @@ import { CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-update-product',
   standalone: true,
-  imports: [CommonModule, ToastModule, TableModule, InputNumberModule, ButtonModule,CurrencyPipe,FormsModule, InputTextModule],
+  imports: [CommonModule, ToastModule, TableModule, InputNumberModule, ButtonModule,CurrencyPipe,FormsModule, InputTextModule, FileUploadModule],
   templateUrl: './update-product.component.html',
   styleUrls: ['./update-product.component.css'],
   providers: [ProductService,MessageService]
@@ -24,6 +25,7 @@ export class UpdateProductComponent{
   products: Product[] = []; 
   grandTotal: number;
   @ViewChild('dt') dt: any; 
+  uploadedImage: any; // a variable to store the uploaded image
 
   constructor(private productService: ProductService, private messageService: MessageService) {
     console.log('ProductService:', productService);
@@ -107,6 +109,15 @@ export class UpdateProductComponent{
   filterProducts(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dt.filterGlobal(filterValue, 'contains');
+  }
+
+  onUpload(event: any) {
+    // get the file from the event.originalEvent.body
+    // this may vary depending on how your server responds
+    // for simplicity, we assume the server returns the file object
+    // const file = event.originalEvent.body;
+    // assign the file to the variable
+    // this.uploadedImage = file;
   }
 
 }
