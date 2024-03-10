@@ -4,7 +4,7 @@ import { TableModule } from 'primeng/table';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 import { ProductService } from '../product.service';
-import { Product } from '../product';
+import { Product } from '../product.service';
 import { MessageService } from 'primeng/api';
 import { ViewChild } from '@angular/core';
 import { CurrencyPipe } from '@angular/common'; 
@@ -74,7 +74,7 @@ export class UpdateProductComponent{
       quantity: 1,
       total: 0,
       description: 'Default description', // add a default description
-      photo: 'default-photo-url',         // add a default photo URL or path
+      photo: 'Default photo', 
       seller: 'Default seller',           // add a default seller name or ID
       category: ['Default category']        // add a default category
     };
@@ -87,13 +87,11 @@ export class UpdateProductComponent{
   saveProducts() {
     this.productService.saveProducts(this.products).subscribe({
       next: (savedProducts) => {
-        // Handle the response, maybe update the local products array
-        // with the returned one which might contain generated IDs, etc.
+
         this.products = savedProducts;
         this.messageService.add({severity:'success', summary:'Success', detail:'Products saved to database'});
       },
       error: (error) => {
-        // Handle any errors here
         console.error('Error saving products:', error);
         this.messageService.add({severity:'error', summary:'Error', detail:'Could not save products to database'});
       }
@@ -112,13 +110,20 @@ export class UpdateProductComponent{
     this.dt.filterGlobal(filterValue, 'contains');
   }
 
-  onUpload(event: any) {
-    // get the file from the event.originalEvent.body
-    // this may vary depending on how your server responds
-    // for simplicity, we assume the server returns the file object
-    // const file = event.originalEvent.body;
-    // assign the file to the variable
-    // this.uploadedImage = file;
+
+  onUpload(event: any, product: any): void {
+    const file = event.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (e: any) => {
+      // Assume product has an 'imageUrl' property to store the image URL
+      product.imageUrl = e.target.result;
+      // Update the UI to reflect the change
+      this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: 'The image has been uploaded successfully.'});
+    };
+
+    reader.readAsDataURL(file);
   }
+  
 
 }
