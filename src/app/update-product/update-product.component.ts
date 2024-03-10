@@ -114,12 +114,11 @@ export class UpdateProductComponent{
       const reader = new FileReader();
     
       reader.onload = (e: any) => {
-        // Assuming 'imageUrl' is the correct property on the product to hold the image data
-        product.imageUrl = e.target.result; // This should be the base64 data URL
-        this.refreshProducts(); // Refresh the products array to trigger change detection
+        product.imageUrl = e.target.result;
+        this.refreshProducts(); 
       };
   
-      reader.readAsDataURL(file); // This will read the file as a data URL (base64)
+      reader.readAsDataURL(file); 
     }
   }
   
