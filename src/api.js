@@ -1,21 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
-const cors = require('cors'); 
-// Middleware
+
 app.use(bodyParser.json());
-app.use(cors({
-  origin: 'http://localhost:4200' 
-}));
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/drexel-marketplace', { useNewUrlParser: true, useUnifiedTopology: true })
+app.use(cors({ origin: 'http://localhost:4200' }));
+
+mongoose.connect('mongodb://localhost:27017/drexel-marketplace')
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 
-// Product Schema
 const ProductSchema = new mongoose.Schema({
   name: String,
   description: String,
@@ -24,48 +21,21 @@ const ProductSchema = new mongoose.Schema({
   price: Number, 
   quantity: Number,
   total: Number,
-  category: [String] 
+  category: [String]
 });
 
-const UserSchema = mongoose.Schema({
-    username: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    }
-});
-
-const User = mongoose.model('User', UserSchema);
 const Product = mongoose.model('Product', ProductSchema);
 
-// Create a Product
 app.post('/products', async (req, res) => {
   try {
-    // Check if the request body is an array
-    if (Array.isArray(req.body)) {
-      // Use MongoDB's insertMany() for bulk insertion
-      const products = await Product.insertMany(req.body);
-      res.status(201).send(products);
-    } else {
-      // Handle a single product insertion
-      const product = new Product(req.body);
-      await product.save();
-      res.status(201).send(product);
-    }
+    const product = new Product(req.body);
+    await product.save();
+    res.status(201).send(product);
   } catch (error) {
     res.status(400).send(error);
   }
 });
 
-
-// Get all Products
 app.get('/products', async (req, res) => {
   try {
     const products = await Product.find({});
@@ -75,7 +45,6 @@ app.get('/products', async (req, res) => {
   }
 });
 
-// Get a single Product by id
 app.get('/products/:id', async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -88,10 +57,14 @@ app.get('/products/:id', async (req, res) => {
   }
 });
 
-// Update a Product
 app.patch('/products/:id', async (req, res) => {
   try {
-    const product = await Product.findOneAndUpdate({ id: req.params.id }, req.body, { new: true });
+    console.log("PATCH request to /products/:id with id:", req.params.id);
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
     if (!product) {
       return res.status(404).send('Product not found');
     }
@@ -106,7 +79,6 @@ app.patch('/products/:id', async (req, res) => {
 });
 
 
-// Delete a Product
 app.delete('/products/:id', async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);
@@ -119,29 +91,6 @@ app.delete('/products/:id', async (req, res) => {
   }
 });
 
-app.post('/register', (req, res) => {
-    const newUser = new User({
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password
-    });
-    newUser.save()
-        .then(() => res.json('User added!'))
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-app.post('/login', (req, res) => {
-    User.findOne({ email: req.body.email, password: req.body.password })
-        .then(user => {
-            if (user) {
-                res.json('Login successful!');
-            } else {
-                res.status(400).json('Invalid email or password.');
-            }
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
-});
-
-// Start the server
 app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+  console.log(`Server running at http://localhost:${port}`);
 });

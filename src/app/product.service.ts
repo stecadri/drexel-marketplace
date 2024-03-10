@@ -4,7 +4,7 @@ import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface Product {
-  _id?: string; 
+  _id?: string; // MongoDB's _id for existing products
   name: string;
   description: string;
   photo: string;
@@ -19,52 +19,34 @@ export interface Product {
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:3000/products'; 
+  private apiUrl = 'http://localhost:3000/products';
 
   constructor(private http: HttpClient) { }
 
-  // Method to fetch all products from the backend
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.apiUrl);
   }
 
-  // Method to fetch a single product by ID from the backend
   getProductById(productId: string): Observable<Product> {
-    const url = `${this.apiUrl}/${productId}`;
-    return this.http.get<Product>(url);
+    return this.http.get<Product>(`${this.apiUrl}/${productId}`);
   }
 
-  // Method to create a new product on the backend
   createProduct(product: Omit<Product, '_id'>): Observable<Product> {
     return this.http.post<Product>(this.apiUrl, product);
   }
 
-  // Method to update an existing product on the backend
   updateProduct(productId: string, updatedProduct: Partial<Product>): Observable<Product> {
-    const url = `${this.apiUrl}/${productId}`;
-    return this.http.patch<Product>(url, updatedProduct);
+    return this.http.patch<Product>(`${this.apiUrl}/${productId}`, updatedProduct);
   }
 
-  // Method to delete a product by ID from the backend
   deleteProduct(productId: string): Observable<Product> {
-    const url = `${this.apiUrl}/${productId}`;
-    return this.http.delete<Product>(url);
+    return this.http.delete<Product>(`${this.apiUrl}/${productId}`);
   }
 
   saveProducts(products: Product[]): Observable<Product[]> {
-    const saveRequests = products.map(product => {
-      if (product._id) {
-        // If _id exists, it's an update operation
-        return this.updateProduct(product._id, product);
-      } else {
-        // If no _id, it's a create operation
-        return this.createProduct(product);
-      }
-    });
-
-    // Use forkJoin to execute all requests concurrently and wait for all to complete
-    return forkJoin(saveRequests).pipe(
-      map(responses => responses.filter(response => !!response)) // Filter out any undefined responses (if any)
-    );
+    const saveRequests = products.map(product => product._id 
+      ? this.updateProduct(product._id, product) 
+      : this.createProduct(product));
+    return forkJoin(saveRequests);
   }
 }
