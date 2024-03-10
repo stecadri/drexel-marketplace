@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export interface Product {
-  id: number;
+  _id?: string; 
   name: string;
   description: string;
   photo: string;
@@ -34,7 +35,7 @@ export class ProductService {
   }
 
   // Method to create a new product on the backend
-  createProduct(product: Product): Observable<Product> {
+  createProduct(product: Omit<Product, '_id'>): Observable<Product> {
     return this.http.post<Product>(this.apiUrl, product);
   }
 
@@ -49,10 +50,21 @@ export class ProductService {
     const url = `${this.apiUrl}/${productId}`;
     return this.http.delete<Product>(url);
   }
-  saveProducts(products: Product[]): Observable<Product[]> {
-    console.log('Saving products', products);
-    return this.http.post<Product[]>(this.apiUrl, products);
-  }
-  
 
+  saveProducts(products: Product[]): Observable<Product[]> {
+    const saveRequests = products.map(product => {
+      if (product._id) {
+        // If _id exists, it's an update operation
+        return this.updateProduct(product._id, product);
+      } else {
+        // If no _id, it's a create operation
+        return this.createProduct(product);
+      }
+    });
+
+    // Use forkJoin to execute all requests concurrently and wait for all to complete
+    return forkJoin(saveRequests).pipe(
+      map(responses => responses.filter(response => !!response)) // Filter out any undefined responses (if any)
+    );
+  }
 }

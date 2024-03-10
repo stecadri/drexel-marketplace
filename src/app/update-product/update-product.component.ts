@@ -58,7 +58,7 @@ export class UpdateProductComponent{
   
   removeProduct(product: Product) {
     // Remove the product from the products array
-    this.products = this.products.filter(p => p.id !== product.id);
+    this.products = this.products.filter(p => p._id !== product._id);
     // Update the grand total
     this.grandTotal = this.calculateGrandTotal();
     // Display a success message
@@ -67,19 +67,18 @@ export class UpdateProductComponent{
   
   addProduct() {
     // Create a new product with default values
-    let newProduct: Product = {
-      id: this.products.length + 1,
+    let newProduct: Partial<Product> = {
       name: 'New Product',
       price: 0,
       quantity: 1,
       total: 0,
-      description: 'Default description', // add a default description
+      description: 'Default description',
       photo: 'Default photo', 
-      seller: 'Default seller',           // add a default seller name or ID
-      category: ['Default category']        // add a default category
+      seller: 'Default seller',           
+      category: ['Default category']        
     };
     // Add the new product to the products array
-    this.products.push(newProduct);
+    this.products.push(newProduct as Product); // Since _id is not present, we assert it as Product
     // Display a success message
     this.messageService.add({severity:'success', summary:'Success', detail:'Product added to cart'});
   }

@@ -17,7 +17,6 @@ mongoose.connect('mongodb://localhost:27017/drexel-marketplace', { useNewUrlPars
 
 // Product Schema
 const ProductSchema = new mongoose.Schema({
-  id : Number,
   name: String,
   description: String,
   photo: String,
@@ -92,15 +91,20 @@ app.get('/products/:id', async (req, res) => {
 // Update a Product
 app.patch('/products/:id', async (req, res) => {
   try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const product = await Product.findOneAndUpdate({ id: req.params.id }, req.body, { new: true });
     if (!product) {
-      return res.status(404).send();
+      return res.status(404).send('Product not found');
     }
     res.send(product);
   } catch (error) {
-    res.status(400).send(error);
+    console.error(error);
+    res.status(400).json({
+      message: "Error updating product",
+      error: error.message
+    });
   }
 });
+
 
 // Delete a Product
 app.delete('/products/:id', async (req, res) => {
