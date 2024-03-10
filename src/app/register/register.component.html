@@ -33,10 +33,10 @@
           </div>
         </div>
         <br>
-        <button pButton type="submit" label="Register" [disabled]="registerForm.invalid"></button>
+        <button pButton type="submit" label="Register" [disabled]="registerForm.invalid" [style]="{ 'background-color': '#006699' }"></button>
       </form>
       <br>
-      <button pButton label="Or sign in" (click)="navigateToSignIn($event)"></button>
+      <p-button label="Or sign in" [link]="true" (click)="navigateToSignIn($event)" [style]="{ 'color': '#006699' }"></p-button>
     </div>
   </div>
   

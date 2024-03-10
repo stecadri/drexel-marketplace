@@ -57,6 +57,7 @@
     float: left;
     width: 33.33%;
     padding: 10px;
+    outline-style: inset;
 }
   
 .row:after {
@@ -85,4 +86,8 @@
     left:0;
     background-size: 100% 400px;
     z-index:-3;
+}
+
+p {
+    font-size: 20px;
 }

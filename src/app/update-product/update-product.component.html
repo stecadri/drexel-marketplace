@@ -31,15 +31,14 @@
                       <ng-template #uploadBlock>
                         <p-fileUpload mode="basic" chooseLabel="Upload" name="uploadProduct"
                                       accept="image/*" [maxFileSize]="1000000"
-                                      (onSelect)="onUpload($event, product)">
+                                      (onSelect)="onUpload($event, product)" [style]="{ 'background-color': '#006699' }">
                         </p-fileUpload>
                       </ng-template>
                       
                 </td>
                 <td>
-                    <input type="text" pInputText [(ngModel)]="product.name" [style]="{ 'margin-top':'15px' }"/>
+                    <input type="text" pInputText [(ngModel)]="product.name" [style]="{ 'margin-top':'5px' }"/>
                 </td>
-                    <!-- <td>{{ product.price | currency:'USD':'symbol' }}</td> -->
                 <td>
                     <p-inputNumber [(ngModel)]="product.price" (onBlur)="updateTotal(product)" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
                 </td>
@@ -48,7 +47,7 @@
                 </td>
                 <td>{{ product.total | currency:'USD':'symbol' }}</td>
                 <td>
-                    <p-button icon="pi pi-trash" (onClick)="removeProduct(product)" class="p-button-rounded p-button-danger p-button-outlined"></p-button>
+                    <p-button icon="pi pi-trash" (onClick)="removeProduct(product)" class="p-button-rounded p-button-danger p-button-outlined" [style]="{ 'background-color': '#006699' }"></p-button>
                 </td>
             </tr>
         </ng-template>
@@ -62,7 +61,7 @@
             <div class="flex align-items-center gap-4">
                 <span class="text-2xl font-bold">Grand Total: {{ grandTotal | currency:'USD':'symbol' }}</span>
                 <br>
-                <p-button [style]="{'margin-top': '20px', 'background-color': '#006699'}" label="Save" (onClick)="saveProducts()" class="p-button-rounded p-button-primary" ></p-button>
+                <p-button [style]="{'margin-top': '20px', 'background-color': '#006699',  'display': 'block', 'margin-left': 'auto','margin-right': '10px'}" label="Save" (onClick)="saveProducts()" class="p-button-rounded p-button-primary" ></p-button>
             </div>
         </div>
     </ng-template>
