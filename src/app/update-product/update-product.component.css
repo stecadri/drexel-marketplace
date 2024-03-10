@@ -34,7 +34,7 @@ br {
     line-height:25px;
 }
 
-span {
+#mySpan {
     float: right;
     margin-right: 10px;
 }

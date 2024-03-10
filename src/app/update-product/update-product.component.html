@@ -59,7 +59,7 @@
                 <!-- <span class="font-semibold">Add New Product</span> -->
             </div>
             <div class="flex align-items-center gap-4">
-                <span class="text-2xl font-bold">Grand Total: {{ grandTotal | currency:'USD':'symbol' }}</span>
+                <span class="text-2xl font-bold" id="mySpan">Grand Total: {{ grandTotal | currency:'USD':'symbol' }}</span>
                 <br>
                 <p-button [style]="{'margin-top': '20px', 'background-color': '#006699',  'display': 'block', 'margin-left': 'auto','margin-right': '10px'}" label="Save" (onClick)="saveProducts()" class="p-button-rounded p-button-primary" ></p-button>
             </div>
