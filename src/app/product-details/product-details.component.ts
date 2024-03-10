@@ -4,7 +4,7 @@ import { TableModule } from 'primeng/table';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 import { ProductService } from '../product.service';
-import { Product } from '../product';
+import { Product } from '../product.service';
 import { MessageService } from 'primeng/api';
 import { ViewChild } from '@angular/core';
 import { CurrencyPipe } from '@angular/common'; 

@@ -109,8 +109,20 @@ export class UpdateProductComponent{
     this.dt.filterGlobal(filterValue, 'contains');
   }
 
-  onUpload(event: any) {
 
+  onUpload(event: any, product: any): void {
+    const file = event.files[0];
+    const reader = new FileReader();
+
+    reader.onload = (e: any) => {
+      // Assume product has an 'imageUrl' property to store the image URL
+      product.imageUrl = e.target.result;
+      // Update the UI to reflect the change
+      this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: 'The image has been uploaded successfully.'});
+    };
+
+    reader.readAsDataURL(file);
   }
+  
 
 }
