@@ -26,3 +26,11 @@
 input {
     margin-bottom: 20px;
 }
+
+::ng-deep .my-button {
+    /* Set the background color to green */
+    background-color: #07294D;
+    /* Set the text color to white */
+    color: white;
+    outline-color: #07294D;
+}

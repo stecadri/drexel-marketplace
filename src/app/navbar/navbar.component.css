@@ -1,4 +1,28 @@
-.p-button.cart {
-    background-color: green;
-    border-color: green;
+::ng-deep .my-menubar {
+    background-color: #07294D;
+}
+
+::ng-deep .my-menubar .p-menuitem-text {
+    /* Set the text color to white */
+    color: white;
+}
+    
+::ng-deep .my-menubar .p-menuitem-link:hover {
+    /* Set the background color to blue on hover */
+    background-color: #FFC600;
+}
+
+::ng-deep .my-button {
+    /* Set the background color to green */
+    background-color: #07294D;
+    /* Set the text color to white */
+    color: white;
+    outline-color: #07294D;
+}
+    
+    ::ng-deep .my-button:hover {
+    /* Set the background color to blue on hover */
+    background-color: #FFC600;
+    /* Set the text color to black on hover */
+    color: white;
 }

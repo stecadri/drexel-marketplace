@@ -31,15 +31,15 @@ export class NavbarComponent {
   test = "hello";
   ngOnInit() {
       this.items = [
-        {
-          label: 'File',
-          icon: 'pi pi-plus',
-          items: [
-              {label: 'New', icon: 'pi pi-plus', url: 'http://www.primefaces.org/primeng'},
-              {label: 'Open', icon: 'pi pi-download', routerLink: ['/pagename']},
-              {label: 'Recent Files', icon: 'pi pi-download', routerLink: ['/pagename'], queryParams: {'recent': 'true'}}
-          ]
-        },
+        // {
+        //   label: 'File',
+        //   icon: 'pi pi-plus',
+        //   items: [
+        //       {label: 'New', icon: 'pi pi-plus', url: 'http://www.primefaces.org/primeng'},
+        //       {label: 'Open', icon: 'pi pi-download', routerLink: ['/pagename']},
+        //       {label: 'Recent Files', icon: 'pi pi-download', routerLink: ['/pagename'], queryParams: {'recent': 'true'}}
+        //   ]
+        // },
         {
           label: 'About', routerLink: ['/about']
         },

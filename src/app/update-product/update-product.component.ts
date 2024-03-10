@@ -12,11 +12,12 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { FileUploadModule } from 'primeng/fileupload';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-update-product',
   standalone: true,
-  imports: [CommonModule, ToastModule, TableModule, InputNumberModule, ButtonModule,CurrencyPipe,FormsModule, InputTextModule, FileUploadModule],
+  imports: [CommonModule, ToastModule, TableModule, InputNumberModule, ButtonModule,CurrencyPipe,FormsModule, InputTextModule, FileUploadModule, CardModule],
   templateUrl: './update-product.component.html',
   styleUrls: ['./update-product.component.css'],
   providers: [ProductService,MessageService]

@@ -2,7 +2,7 @@
 <p-table #dt [value]="products" [paginator]="true" [rows]="5" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" [rowsPerPageOptions]="[5,10,15]" [globalFilterFields]="['name','price']">
     <ng-template pTemplate="caption">
         <div class="flex flex-column md:flex-row md:justify-content-between align-items-center gap-4">
-        <h3>View All Products</h3>
+        <h1>View All Products</h1>
         <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
         <input pInputText type="text" (input)="filterProducts($event)" placeholder="Search by name or price" />
