@@ -108,21 +108,28 @@ export class UpdateProductComponent{
     const filterValue = (event.target as HTMLInputElement).value;
     this.dt.filterGlobal(filterValue, 'contains');
   }
-
-
   onUpload(event: any, product: any): void {
-    const file = event.files[0];
-    const reader = new FileReader();
-
-    reader.onload = (e: any) => {
-      // Assume product has an 'imageUrl' property to store the image URL
-      product.imageUrl = e.target.result;
-      // Update the UI to reflect the change
-      this.messageService.add({severity: 'info', summary: 'File Uploaded', detail: 'The image has been uploaded successfully.'});
-    };
-
-    reader.readAsDataURL(file);
+    if (event.files && event.files.length) {
+      const file = event.files[0];
+      const reader = new FileReader();
+    
+      reader.onload = (e: any) => {
+        // Assuming 'imageUrl' is the correct property on the product to hold the image data
+        product.imageUrl = e.target.result; // This should be the base64 data URL
+        this.refreshProducts(); // Refresh the products array to trigger change detection
+      };
+  
+      reader.readAsDataURL(file); // This will read the file as a data URL (base64)
+    }
   }
+  
+  refreshProducts(): void {
+    this.products = [...this.products];
+  }
+  
+  
+
+
   
 
 }

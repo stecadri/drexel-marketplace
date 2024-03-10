@@ -38,12 +38,14 @@
                 <td>
                     <ng-container *ngIf="product.imageUrl; else uploadBlock">
                         <img [src]="product.imageUrl" [alt]="product.name" style="width: 100px; height: auto;">
-                    </ng-container>
-                    <ng-template #uploadBlock>
-                        <p-fileUpload mode="basic" chooseLabel="Upload" name="uploadProduct" url="./upload.php"
-                                    accept="image/*" [maxFileSize]="1000000"
-                                    (onUpload)="onUpload($event, product)"></p-fileUpload>
-                    </ng-template>
+                      </ng-container>
+                      <ng-template #uploadBlock>
+                        <p-fileUpload mode="basic" chooseLabel="Upload" name="uploadProduct"
+                                      accept="image/*" [maxFileSize]="1000000"
+                                      (onSelect)="onUpload($event, product)">
+                        </p-fileUpload>
+                      </ng-template>
+                      
                 </td>
                 <td>
                     <input type="text" pInputText [(ngModel)]="product.name" [style]="{ 'margin-top':'15px' }"/>
