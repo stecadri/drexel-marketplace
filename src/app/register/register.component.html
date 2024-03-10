@@ -1,12 +1,42 @@
 <div class="page">
-
     <div class="register">
-        <h1>Register an Account</h1>
-        <input pInputText placeholder="Email" formControlName="email" /> <br>
-        <input pInputText placeholder="Password" type="password" formControlName="password" /> <br>
-        <input pInputText placeholder="Re-enter Password" type="password" formControlName="password" /> <br>
-        <p-button label="Register" type="submit" [style]="{ 'background-color': '#006699' }"></p-button> <br>
-        <p-button [link] = "true" label="Or sign in" (click)="navigateToSignIn($event)"></p-button>
+      <h1>Register an Account</h1>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div>
+          <input type="email" pInputText placeholder="Email" formControlName="email" />
+          <div *ngIf="registerForm.controls['email'].errors && registerForm.controls['email'].touched">
+            <div *ngIf="registerForm.controls['email'].errors['required']">
+              Email is required.
+            </div>
+            <div *ngIf="registerForm.controls['email'].errors['email']">
+              Email must be a valid email address.
+            </div>
+          </div>
+        </div>
+        <br>
+        <div>
+          <input type="password" pInputText placeholder="Password" formControlName="password" />
+          <div *ngIf="registerForm.controls['password'].errors && registerForm.controls['password'].touched">
+            Password is required and must be at least 6 characters.
+          </div>
+        </div>
+        <br>
+        <div>
+          <input type="password" pInputText placeholder="Re-enter Password" formControlName="confirmPassword" />
+          <div *ngIf="registerForm.controls['confirmPassword'].errors && registerForm.controls['confirmPassword'].touched">
+            <div *ngIf="registerForm.controls['confirmPassword'].errors['required']">
+                Confirm Password is required.
+            </div>
+            <div *ngIf="registerForm.controls['confirmPassword'].errors['mustMatch']">
+              Passwords must match.
+            </div>
+          </div>
+        </div>
+        <br>
+        <button pButton type="submit" label="Register" [disabled]="registerForm.invalid"></button>
+      </form>
+      <br>
+      <button pButton label="Or sign in" (click)="navigateToSignIn($event)"></button>
     </div>
-
-</div>
+  </div>
+  

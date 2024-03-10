@@ -22,34 +22,36 @@
         </tr>
     </ng-template>
 
-    <ng-template pTemplate="body" let-product>
-        <tr>
-            <td>
-                <ng-container *ngIf="product.imageUrl; else uploadBlock">
-                    <img [src]="product.imageUrl" [alt]="product.name" style="width: 100px; height: auto;">
-                </ng-container>
-                <ng-template #uploadBlock>
-                    <p-fileUpload mode="basic" chooseLabel="Upload" name="uploadProduct" url="./upload.php"
-                                accept="image/*" [maxFileSize]="1000000"
-                                (onUpload)="onUpload($event, product)" [style]="{ 'background-color': '#006699' }"></p-fileUpload>
-                </ng-template>
-            </td>
-            <td>
-                <input type="text" pInputText [(ngModel)]="product.name" [style]="{ 'margin-top':'0x' }"/>
-            </td>
-                <!-- <td>{{ product.price | currency:'USD':'symbol' }}</td> -->
-            <td>
-                <p-inputNumber [(ngModel)]="product.price" (onBlur)="updateTotal(product)" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
-            </td>
-            <td>
-                <p-inputNumber [(ngModel)]="product.quantity" [min]="1" [max]="10" (onBlur)="updateTotal(product)"></p-inputNumber>
-            </td>
-            <td>{{ product.total | currency:'USD':'symbol' }}</td>
-            <td>
-                <p-button icon="pi pi-trash" (onClick)="removeProduct(product)" class="p-button-rounded p-button-danger p-button-outlined" [style]="{ 'background-color': '#006699' }"></p-button>
-            </td>
-        </tr>
-    </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>
+                    <ng-container *ngIf="product.imageUrl; else uploadBlock">
+                        <img [src]="product.imageUrl" [alt]="product.name" style="width: 100px; height: auto;">
+                      </ng-container>
+                      <ng-template #uploadBlock>
+                        <p-fileUpload mode="basic" chooseLabel="Upload" name="uploadProduct"
+                                      accept="image/*" [maxFileSize]="1000000"
+                                      (onSelect)="onUpload($event, product)">
+                        </p-fileUpload>
+                      </ng-template>
+                      
+                </td>
+                <td>
+                    <input type="text" pInputText [(ngModel)]="product.name" [style]="{ 'margin-top':'15px' }"/>
+                </td>
+                    <!-- <td>{{ product.price | currency:'USD':'symbol' }}</td> -->
+                <td>
+                    <p-inputNumber [(ngModel)]="product.price" (onBlur)="updateTotal(product)" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+                </td>
+                <td>
+                    <p-inputNumber [(ngModel)]="product.quantity" [min]="1" [max]="10" (onBlur)="updateTotal(product)"></p-inputNumber>
+                </td>
+                <td>{{ product.total | currency:'USD':'symbol' }}</td>
+                <td>
+                    <p-button icon="pi pi-trash" (onClick)="removeProduct(product)" class="p-button-rounded p-button-danger p-button-outlined"></p-button>
+                </td>
+            </tr>
+        </ng-template>
 
     <ng-template pTemplate="summary">
         <div class="flex flex-column md:flex-row md:justify-content-between align-items-center gap-4">
