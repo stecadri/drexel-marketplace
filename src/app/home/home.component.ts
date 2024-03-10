@@ -37,7 +37,7 @@ export class HomeComponent {
           { 
               title: 'Buy and Sell Your University Goods', 
               image: 
-'https://get.chownow.com/wp-content/uploads/best-food-delivery-service-for-restaurants.png', 
+'https://philafleamarkets.org/wp-content/uploads/2022/05/IMG_0170.jpg', 
           }, 
           { 
               title: 'Connect with Other Drexel Students', 

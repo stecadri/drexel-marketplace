@@ -41,9 +41,6 @@ export class NavbarComponent {
         //   ]
         // },
         {
-          label: 'About', routerLink: ['/about']
-        },
-        {
           label: 'View All Products', routerLink: ['/product-details']
         },
         {
@@ -54,6 +51,9 @@ export class NavbarComponent {
         },
         {
           label: 'Register', routerLink: ['/register']
+        },
+        {
+          label: 'About', routerLink: ['/about']
         },
     ]
   };
