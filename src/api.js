@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const app = express();
 const port = 3000;
@@ -23,20 +25,19 @@ const ProductSchema = new mongoose.Schema({
   category: [String] // Assuming category is an array of strings
 });
 
-const UserSchema = mongoose.Schema({
-    username: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    }
+// Pre-save hook to hash password before saving a user
+userSchema.pre('save', async function(next) {
+  if (this.isModified('password') || this.isNew) {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
+  next();
 });
+
+// Method to help validate a user's password
+userSchema.methods.isValidPassword = async function(password) {
+  return await bcrypt.compare(password, this.password);
+};
+
 
 const User = mongoose.model('User', UserSchema);
 const Product = mongoose.model('Product', ProductSchema);
@@ -101,27 +102,40 @@ app.delete('/products/:id', async (req, res) => {
   }
 });
 
-api.post('/register', (req, res) => {
-    const newUser = new User({
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password
-    });
-    newUser.save()
-        .then(() => res.json('User added!'))
-        .catch(err => res.status(400).json('Error: ' + err));
+/ Registration
+app.post('/register', async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    if (await User.findOne({ email })) {
+      return res.status(400).send({ message: 'Email already exists' });
+    }
+
+    const user = new User({ username, email, password });
+    await user.save();
+    res.status(201).send({ message: 'User created successfully' });
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
-api.post('/login', (req, res) => {
-    User.findOne({ email: req.body.email, password: req.body.password })
-        .then(user => {
-            if (user) {
-                res.json('Login successful!');
-            } else {
-                res.status(400).json('Invalid email or password.');
-            }
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
+
+// Login
+app.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user || !(await user.isValidPassword(password))) {
+      return res.status(401).send({ message: 'Invalid email or password' });
+    }
+
+    // Implement JWT or any session management logic here
+
+    res.status(200).send({ message: 'Login successful' });
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
+
 module.exports = router;
 
 // Start the server
