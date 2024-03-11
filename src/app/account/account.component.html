@@ -1,5 +1,8 @@
 
 <div class="container">
+    <div *ngIf="user">
+        <h2>You are currently logged in as {{user.email}}</h2>
+    </div>
     <h1>Account</h1>
     
     <!-- <h2>Manage your account settings</h2> -->

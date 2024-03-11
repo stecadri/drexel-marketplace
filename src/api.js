@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const port = 3000;
@@ -102,38 +104,37 @@ app.delete('/products/:id', async (req, res) => {
     res.status(500).send(error);
   }
 });
-// Route to register a new user
 app.post('/users/register', async (req, res) => {
-  const { email } = req.body;
-
+  const { email, password } = req.body;
   try {
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'Email already in use.' });
     }
-
-    // If not, proceed with creating a new user
-    const newUser = new User(req.body);
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const newUser = new User({ email, password: hashedPassword });
     await newUser.save();
-    res.status(201).send({ message: 'User registered!', userId: newUser._id });
+    res.status(201).json({ message: 'User registered!' });
   } catch (error) {
-    console.error(error);
-    res.status(400).json({ message: 'Error registering user', error: error });
+    res.status(400).json({ message: 'Error registering user', error });
   }
 });
 
-// Route to login a user
-app.post('/users/login', async (req, res) => { // Changed endpoint to /users/login
+// User login with token generation
+app.post('/users/login', async (req, res) => {
+  const { email, password } = req.body;
   try {
-    const user = await User.findOne({ email: req.body.email  });
-    if (user ) {
-      res.json({ message: 'Login successful!', userId: user._id });
-    } else {
-      res.status(400).json('Invalid email or password.');
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json('Invalid email or password.');
     }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json('Invalid email or password.');
+    }
+    const token = jwt.sign({ userId: user._id, email: user.email }, 'YOUR_SECRET_KEY', { expiresIn: '1h' });
+    res.json({ message: 'Login successful!', token });
   } catch (error) {
-    console.error(error);
     res.status(400).json('Error: ' + error);
   }
 });
