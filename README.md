@@ -12,6 +12,8 @@ Install MongoDB: https://www.mongodb.com/docs/manual/installation/
 
 Install mongoose: `npm install mongoose`
 
+Install bcrypt: `npm install bcrypt`
+
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
