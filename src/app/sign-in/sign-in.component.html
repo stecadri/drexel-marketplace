@@ -4,8 +4,8 @@
         <h1>Sign In</h1>
         <input pInputText placeholder="Email" formControlName="email" /> <br>
         <input pInputText placeholder="Password" type="password" formControlName="password" /> <br>
-        <p-button label="Sign In" type="submit"></p-button> <br>
-        <p-button [link]="true" routerLink="/register">Or create an account.</p-button>
+        <p-button label="Sign In" type="submit" [style]="{ 'background-color': '#006699' }"></p-button> <br>
+        <p-button [link]="true" label="Or create an account" (click)="navigateToRegister($event)"></p-button>
     </div>
 
 </div>
