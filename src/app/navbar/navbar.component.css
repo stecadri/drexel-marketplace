@@ -2,9 +2,20 @@
     background-color: #07294D;
 }
 
+/* ::ng-deep .my-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled):hover {
+    background-color: #07294D;
+} */
+
 ::ng-deep .my-menubar .p-menuitem-text {
     /* Set the text color to white */
     color: white;
+    /* background-color: #07294D; */
+}
+
+::ng-deep .my-menubar .p-menuitem {
+    /* Set the text color to white */
+    /* color: white; */
+    background-color: #07294D;
 }
     
 ::ng-deep .my-menubar .p-menuitem-link:hover {
