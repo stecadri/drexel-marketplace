@@ -24,13 +24,10 @@ const ProductSchema = new mongoose.Schema({
   category: [String]
 });
 const UserSchema = mongoose.Schema({
-  username: {
-      type: String,
-      required: true
-  },
   email: {
       type: String,
-      required: true
+      required: true,
+      unique: true 
   },
   password: {
       type: String,
@@ -105,26 +102,40 @@ app.delete('/products/:id', async (req, res) => {
     res.status(500).send(error);
   }
 });
-app.post('/register', (req, res) => {
-  const newUser = new User({
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password
-  });
-  newUser.save()
-      .then(() => res.json('User added!'))
-      .catch(err => res.status(400).json('Error: ' + err));
+// Route to register a new user
+app.post('/users/register', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email already in use.' });
+    }
+
+    // If not, proceed with creating a new user
+    const newUser = new User(req.body);
+    await newUser.save();
+    res.status(201).send({ message: 'User registered!', userId: newUser._id });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ message: 'Error registering user', error: error });
+  }
 });
-app.post('/login', (req, res) => {
-  User.findOne({ email: req.body.email, password: req.body.password })
-      .then(user => {
-          if (user) {
-              res.json('Login successful!');
-          } else {
-              res.status(400).json('Invalid email or password.');
-          }
-      })
-      .catch(err => res.status(400).json('Error: ' + err));
+
+// Route to login a user
+app.post('/users/login', async (req, res) => { // Changed endpoint to /users/login
+  try {
+    const user = await User.findOne({ email: req.body.email  });
+    if (user ) {
+      res.json({ message: 'Login successful!', userId: user._id });
+    } else {
+      res.status(400).json('Invalid email or password.');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(400).json('Error: ' + error);
+  }
 });
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

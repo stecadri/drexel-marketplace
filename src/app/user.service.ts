@@ -12,16 +12,15 @@ export interface User {
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:3000'; 
+  private apiUrl = 'http://localhost:3000/users'; // Changed to /users
 
   constructor(private http: HttpClient) {}
 
-  // Register a new user
   register(user: User): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, user);
+    const {email, password } = user;
+    return this.http.post(`${this.apiUrl}/register`, {email, password });
   }
 
-  // User login
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials);
   }

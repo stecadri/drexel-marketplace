@@ -1,42 +1,39 @@
 <div class="page">
-    <div class="register">
-      <h1>Register an Account</h1>
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-        <div>
-          <input type="email" pInputText placeholder="Email" formControlName="email" />
-          <div *ngIf="registerForm.controls['email'].errors && registerForm.controls['email'].touched">
-            <div *ngIf="registerForm.controls['email'].errors['required']">
-              Email is required.
-            </div>
-            <div *ngIf="registerForm.controls['email'].errors['email']">
-              Email must be a valid email address.
-            </div>
-          </div>
+  <div class="register">
+    <h1>Register an Account</h1>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+      <div class="p-field">
+        <label for="email">Email</label>
+        <input type="email" pInputText placeholder="Email" formControlName="email" id="email" />
+        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+          <small *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</small>
+          <small *ngIf="registerForm.get('email')?.errors?.['email']">Email must be a valid email address.</small>
         </div>
-        <br>
-        <div>
-          <input type="password" pInputText placeholder="Password" formControlName="password" />
-          <div *ngIf="registerForm.controls['password'].errors && registerForm.controls['password'].touched">
-            Password is required and must be at least 6 characters.
-          </div>
+      </div>
+
+      <div class="p-field">
+        <label for="password">Password</label>
+        <input type="password" pInputText placeholder="Password" formControlName="password" id="password" />
+        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          <small *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</small>
+          <small *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</small>
         </div>
-        <br>
-        <div>
-          <input type="password" pInputText placeholder="Re-enter Password" formControlName="confirmPassword" />
-          <div *ngIf="registerForm.controls['confirmPassword'].errors && registerForm.controls['confirmPassword'].touched">
-            <div *ngIf="registerForm.controls['confirmPassword'].errors['required']">
-                Confirm Password is required.
-            </div>
-            <div *ngIf="registerForm.controls['confirmPassword'].errors['mustMatch']">
-              Passwords must match.
-            </div>
-          </div>
+      </div>
+
+      <div class="p-field">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" pInputText placeholder="Re-enter Password" formControlName="confirmPassword" id="confirmPassword" />
+        <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
+          <small *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirm Password is required.</small>
+          <small *ngIf="registerForm.get('confirmPassword')?.errors?.['mustMatch']">Passwords must match.</small>
         </div>
+      </div>
         <br>
         <p-button type="submit" label="Register" [disabled]="registerForm.invalid" [style]="{ 'background-color': '#006699' }"></p-button>
       </form>
       <br>
-      <p-button label="Or sign in" [link]="true" (click)="navigateToSignIn($event)" [style]="{ 'color': '#006699' }"></p-button>
+      <p-button label="Or sign in" [link]="true" (click)="navigateToSignIn()" [style]="{ 'color': '#006699' }"></p-button>
     </div>
   </div>
   

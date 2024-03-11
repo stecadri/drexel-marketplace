@@ -10,9 +10,9 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ CommonModule,ReactiveFormsModule,CardModule, InputTextModule, ButtonModule],
+  imports: [ CommonModule, ReactiveFormsModule, CardModule, InputTextModule, ButtonModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
+  styleUrls: ['./register.component.css'],
   providers: [UserService]
 })
 export class RegisterComponent {
@@ -21,51 +21,47 @@ export class RegisterComponent {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private userService: UserService // Inject the UserService
+    private userService: UserService
   ) {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
-    }, {
-      validator: this.mustMatch('password', 'confirmPassword')
-    });
+    }, { validators: this.mustMatch });
   }
 
-  mustMatch(password: string, confirmPassword: string) {
-    return (formGroup: FormGroup) => {
-      const passwordControl = formGroup.controls[password];
-      const confirmPasswordControl = formGroup.controls[confirmPassword];
+  mustMatch(formGroup: FormGroup) {
+    const passwordControl = formGroup.get('password');
+    const confirmPasswordControl = formGroup.get('confirmPassword');
 
-      if (confirmPasswordControl.errors && !confirmPasswordControl.errors['mustMatch']) {
-        // Return if another validator has already found an error on the confirmPasswordControl
-        return;
-      }
-
-      // Set error on confirmPasswordControl if validation fails
-      if (passwordControl.value !== confirmPasswordControl.value) {
-        confirmPasswordControl.setErrors({ mustMatch: true });
-      } else {
-        confirmPasswordControl.setErrors(null);
-      }
-    };
+    if (confirmPasswordControl && passwordControl && 
+        confirmPasswordControl.value !== passwordControl.value) {
+      confirmPasswordControl.setErrors({ mustMatch: true });
+    } else {
+      confirmPasswordControl?.setErrors(null);
+    }
   }
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      this.userService.register(this.registerForm.value).subscribe({
-        next: (response) => {
-          // Handle successful response
-          this.router.navigate(['/sign-in']);
+      const user = this.registerForm.value;
+      this.userService.register(user).subscribe({
+        next: () => {
+          console.log('Registration successful');
+          this.router.navigate(['/sign-in']); 
         },
         error: (error) => {
-          // Handle error response
+          console.error('Registration failed', error);
         }
       });
+    } else {
+      // If the form is invalid, trigger validation messages.
+      this.registerForm.markAllAsTouched();
     }
   }
   
-  navigateToSignIn(event: Event): void {
-    this.router.navigate(['/sign-in']);
+
+  navigateToSignIn(): void {
+    this.router.navigate(['/sign-in']); // Update to the correct route
   }
 }
