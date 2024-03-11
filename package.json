@@ -26,6 +26,7 @@
     "cors": "^2.8.5",
     "curl": "^0.1.4",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.4.0",
     "mongoose": "^8.2.1",
     "primeicons": "^6.0.1",
