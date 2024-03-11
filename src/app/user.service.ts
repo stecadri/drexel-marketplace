@@ -20,7 +20,8 @@ export class UserService {
   public currentUser: Observable<User | null>;
 
   constructor(private http: HttpClient, private router: Router) {
-    this.currentUserSubject = new BehaviorSubject<User | null>(JSON.parse(localStorage.getItem('currentUser') || 'null'));
+    const storedUser = localStorage.getItem('currentUser');
+    this.currentUserSubject = new BehaviorSubject<User | null>(storedUser ? JSON.parse(storedUser) : null);
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -33,24 +34,25 @@ export class UserService {
   }
 
   login(credentials: { email: string; password: string }): Observable<User> {
-    return this.http.post<User>(`${this.apiUrl}/login`, credentials).pipe(
-      map(user => {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-        return user;
+    return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
+      map(response => {
+        if (response.token) {
+          const user: User = { email: credentials.email, token: response.token };
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+        }
+        return response;
       })
     );
   }
 
   logout() {
-    // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']); 
   }
 
   isAuthenticated(): boolean {
-    return !!this.currentUserSubject.value;
+    return !!this.currentUserValue;
   }
 }
