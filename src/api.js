@@ -11,7 +11,7 @@ const port = 3000;
 app.use(bodyParser.json());
 app.use(cors({ origin: 'http://localhost:4200' }));
 
-mongoose.connect('mongodb://localhost:27017/drexel-marketplace')
+mongoose.connect('mongodb+srv://Cluster78947:Z2ws2jKskkCRpg47@cluster78947.h8fnknq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster78947')
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 
@@ -20,7 +20,7 @@ const ProductSchema = new mongoose.Schema({
   description: String,
   photo: String,
   seller: String,
-  price: Number, 
+  price: Number,
   quantity: Number,
   total: Number,
   category: [String]
@@ -29,7 +29,7 @@ const UserSchema = mongoose.Schema({
   email: {
       type: String,
       required: true,
-      unique: true 
+      unique: true
   },
   password: {
       type: String,
