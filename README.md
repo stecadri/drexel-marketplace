@@ -5,7 +5,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Modules needed
 
 Install AngularJS: `npm install -g @angular/cli`
+
 Install MongoDB: https://www.mongodb.com/docs/manual/installation/
+
 Install mongoose: `npm install mongoose`
 
 ## Build
