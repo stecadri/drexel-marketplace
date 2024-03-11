@@ -4,30 +4,32 @@
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
       <div class="p-field">
-        <label for="email">Email</label>
-        <input type="email" pInputText placeholder="Email" formControlName="email" id="email" />
+        <!-- <label for="email">Email</label> -->
         <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
-          <small *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</small>
-          <small *ngIf="registerForm.get('email')?.errors?.['email']">Email must be a valid email address.</small>
+          <small *ngIf="registerForm.get('email')?.errors?.['required']" style="color: red">Email is required.</small>
+          <small *ngIf="registerForm.get('email')?.errors?.['email']" style="color: red">Email must be a valid email address.</small>
         </div>
+        <input type="email" pInputText placeholder="Email" formControlName="email" id="email" />
+
       </div>
 
       <div class="p-field">
-        <label for="password">Password</label>
-        <input type="password" pInputText placeholder="Password" formControlName="password" id="password" />
+        <!-- <label for="password">Password</label> -->
         <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
-          <small *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</small>
-          <small *ngIf="registerForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</small>
+          <small *ngIf="registerForm.get('password')?.errors?.['required']" style="color: red">Password is required.</small>
+          <small *ngIf="registerForm.get('password')?.errors?.['minlength']" style="color: red">Password must be at least 6 characters long.</small>
         </div>
+        <input type="password" pInputText placeholder="Password" formControlName="password" id="password" />
+
       </div>
 
       <div class="p-field">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" pInputText placeholder="Re-enter Password" formControlName="confirmPassword" id="confirmPassword" />
+        <!-- <label for="confirmPassword">Confirm Password</label> -->
         <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
-          <small *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirm Password is required.</small>
-          <small *ngIf="registerForm.get('confirmPassword')?.errors?.['mustMatch']">Passwords must match.</small>
+          <small *ngIf="registerForm.get('confirmPassword')?.errors?.['required']" style="color: red">Confirm Password is required.</small>
+          <small *ngIf="registerForm.get('confirmPassword')?.errors?.['mustMatch']" style="color: red">Passwords must match.</small>
         </div>
+        <input type="password" pInputText placeholder="Re-enter Password" formControlName="confirmPassword" id="confirmPassword" />
       </div>
         <br>
         <p-button type="submit" label="Register" [disabled]="registerForm.invalid" [style]="{ 'background-color': '#006699' }"></p-button>
