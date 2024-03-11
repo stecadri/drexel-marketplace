@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
@@ -8,61 +8,43 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { PasswordModule } from 'primeng/password';
 import { FormsModule } from '@angular/forms';
 import { MessagesModule } from 'primeng/messages';
+import { UserService } from '../user.service'; // Import UserService
+import { Router } from '@angular/router'; // Import Router
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [InputTextModule, ButtonModule, FormsModule, CardModule, AvatarModule, FieldsetModule, PasswordModule, MessagesModule],
+  imports: [CommonModule,InputTextModule, ButtonModule, FormsModule, CardModule, AvatarModule, FieldsetModule, PasswordModule, MessagesModule],
   templateUrl: './account.component.html',
-  styleUrl: './account.component.css',
-  providers: [MessageService]
+  styleUrls: ['./account.component.css'],
+  providers: [MessageService, UserService] // Include UserService in providers
 })
-export class AccountComponent {
-  user: any;
+export class AccountComponent implements OnInit {
+  user: any = null; 
 
-  constructor(private messageService: MessageService) {
-    // Get the user info from the server or local storage
-    this.user = {
-    name: 'Alice',
-    email: 'alice@example.com',
-    password: '123456',
-    confirm: '123456',
-    image: './assets/alice.jpg'
-    };
+  constructor(
+    private messageService: MessageService,
+    private userService: UserService 
+  ) {}
+
+  ngOnInit() {
+    this.user = this.userService.currentUserValue; 
+    if (!this.user) {
+      this.messageService.add({severity:'warn', summary:'Not Signed In', detail:'Please sign in to view account information.'});
+    }
   }
-
   update() {
-    // Validate the input
-    if (!this.user.name || !this.user.email || !this.user.password || !this.user.confirm) {
-      this.messageService.add({severity:'error', summary:'Error', detail:'Please fill in all the fields'});
-      return;
-    }
+    this.messageService.add({severity:'success', summary:'Success', detail:'Account updated successfully'});
+  }
 
-    if (this.user.password !== this.user.confirm) {
-      this.messageService.add({severity:'error', summary:'Error', detail:'Passwords do not match'});
-      return;
-    }
-    
-    // Send the data to the server
-    // For simplicity, we assume the server returns a success message
-    this.messageService.add({severity:'success', summary:'Success', detail:'Account updated successfully'});  
-  }
-    
   delete() {
-    // Confirm the deletion
-    if (confirm('Are you sure you want to delete your account?')) {
-    // Send the request to the server
-    // For simplicity, we assume the server returns a success message
     this.messageService.add({severity:'success', summary:'Success', detail:'Account deleted successfully'});
-    // Redirect to the login page or home page
-    }
+    // this.router.navigate(['/login']); 
   }
-    
+
   logout() {
-    // Clear the user info from the local storage or session
-    this.user = null;
-    // Redirect to the login page or home page
+    this.userService.logout(); 
+    // this.router.navigate(['/login']); 
   }
 }
-
-

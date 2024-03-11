@@ -18,7 +18,9 @@ export class UserService {
   private apiUrl = 'http://localhost:3000/users';
   private currentUserSubject: BehaviorSubject<User | null>;
   public currentUser: Observable<User | null>;
-
+  private loginStatusSubject = new BehaviorSubject<boolean>(false);
+  public loginStatus = this.loginStatusSubject.asObservable();
+  
   constructor(private http: HttpClient, private router: Router) {
     const storedUser = localStorage.getItem('currentUser');
     this.currentUserSubject = new BehaviorSubject<User | null>(storedUser ? JSON.parse(storedUser) : null);
@@ -34,21 +36,24 @@ export class UserService {
   }
 
   login(credentials: { email: string; password: string }): Observable<User> {
-    return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
-      map(response => {
-        if (response.token) {
-          const user: User = { email: credentials.email, token: response.token };
+    return this.http.post<User>(`${this.apiUrl}/login`, credentials).pipe(
+      map(user => {
+        if (typeof localStorage !== 'undefined') {
           localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
         }
-        return response;
+        this.currentUserSubject.next(user);
+        this.loginStatusSubject.next(true); 
+        return user;
       })
     );
   }
-
+  
   logout() {
-    localStorage.removeItem('currentUser');
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('currentUser');
+    }
     this.currentUserSubject.next(null);
+    this.loginStatusSubject.next(false); 
     this.router.navigate(['/login']); 
   }
 
