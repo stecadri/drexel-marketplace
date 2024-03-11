@@ -4,6 +4,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Modules needed
 
+Install Node.js and npm: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+
 Install AngularJS: `npm install -g @angular/cli`
 
 Install MongoDB: https://www.mongodb.com/docs/manual/installation/
